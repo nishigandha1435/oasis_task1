@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disney Princess Dream</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #e9d5ff, #fce4ff, #f5e1ff);
+        color: #432c58;
+      }
+
+      .stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .stars::before,
+      .stars::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 300%;
+        height: 300%;
+        background-image: radial-gradient(
+          #1a1f71 1px,
+          transparent 1px
+        ); /* light yellow stars */
+        background-size: 30px 30px;
+        animation: twinkle 90s linear infinite;
+        opacity: 0.4;
+      }
+
+      .stars::after {
+        background-image: radial-gradient(
+          #1a1f71 0.5px,
+          transparent 1.5px
+        ); /* white layer */
+        background-size: 50px 50px;
+        animation-duration: 120s;
+        opacity: 0.5;
+      }
+
+      @keyframes twinkle {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(-20%, -20%) scale(1.05);
+        }
+        100% {
+          transform: translate(-40%, -40%) scale(1);
+        }
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 2px 12px rgba(173, 130, 255, 0.2);
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 40px;
+      }
+      .logo img {
+        height: 32px;
+      }
+      nav {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+      }
+      nav a {
+        font-size: 14px;
+        color: #6d35a3;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      nav a:hover {
+        color: #c084fc;
+      }
+      .icons {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+      .icons i {
+        font-size: 16px;
+        color: #6d35a3;
+        cursor: pointer;
+      }
+
+      .top-info {
+        background-color: rgba(255, 255, 255, 0.3);
+        text-align: center;
+        padding: 12px 15px;
+        font-size: 14px;
+        color: #a855f7;
+        margin-top: 70px;
+      }
+
+      .section {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-top: 80px;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease-out;
+        position: relative;
+        overflow: hidden;
+      }
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .image-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      .image-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(231, 210, 255, 0.09);
+        backdrop-filter: blur(2px);
+        z-index: 1;
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        color: rgb(218, 196, 255);
+        padding: 20px;
+        width: 100%;
+        top: 40%;
+        transform: translateY(-50%);
+      }
+      .content h2 {
+        font-size: 2.8rem;
+        margin-bottom: 12px;
+        text-shadow: 0 3px 6px rgba(128, 90, 213, 0.3);
+      }
+      .content p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto;
+        color: rgb(234, 219, 255);
+      }
+      .btn-group {
+        margin-top: 30px;
+      }
+
+      .glass-btn {
+        display: inline-block;
+        padding: 12px 28px;
+        margin: 5px;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: bold;
+        backdrop-filter: blur(12px);
+        background: rgba(157, 104, 230, 0.2);
+        border: 2px solid rgba(168, 85, 247, 0.5);
+        transition: all 0.3s ease;
+      }
+      .glass-btn:hover {
+        background: rgba(168, 85, 247, 0.4);
+        color: #fff;
+        transform: scale(1.05);
+      }
+
+      .feedback-section {
+        padding: 40px 20px;
+        max-width: 500px;
+        margin: 40px auto;
+        background: rgba(241, 231, 255, 0.5);
+        border: 1px solid rgba(196, 149, 255, 0.3);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        text-align: center;
+      }
+      .feedback-section h3 {
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+        color: #a855f7;
+      }
+      .feedback-section textarea {
+        width: 100%;
+        height: 100px;
+        border-radius: 12px;
+        border: none;
+        padding: 10px;
+        font-size: 1rem;
+        resize: none;
+      }
+      .feedback-section button {
+        padding: 10px 22px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 12px;
+        background: #d8b4fe;
+        color: #3b0764;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .feedback-section button:hover {
+        background: #c084fc;
+      }
+
+      footer {
+        background-color: #ede9fe;
+        text-align: center;
+        padding: 30px 20px;
+        font-size: 0.9rem;
+        color: #6b21a8;
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          gap: 10px;
+          font-size: 12px;
+        }
+        .content h2 {
+          font-size: 2rem;
+        }
+        .content p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stars"></div>
+
+    <header>
+      <div class="logo">
+        <img
+          src="https://i.ibb.co/bjVhLVqV/pngimg-com-walt-disney-PNG45.png"
+          alt="Disney Logo"
+        />
+      </div>
+      <nav>
+        <a href="#">Story</a>
+        <a href="#">DreamStory</a>
+        <a href="#">MagicalNotes</a>
+        <a href="#">GlamTV</a>
+        <a href="#">About</a>
+      </nav>
+      <div class="icons">
+        <i class="fas fa-search"></i>
+        <i class="fas fa-shopping-bag"></i>
+      </div>
+    </header>
+
+    <div class="top-info">
+      ✨ Welcome to the enchanted world of Disney Dreams ✨
+    </div>
+
+    <!-- 👑 Princess 1 -->
+    <div class="section princess">
+      <div class="image-container">
+        <video autoplay muted loop playsinline>
+          <source
+            src="https://res.cloudinary.com/drkxmsg4n/video/upload/v1752059560/173239-848944192_yard5l.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="overlay"></div>
+      </div>
+      <div class="content">
+        <h2>Princess Seraphina of Luminara</h2>
+        <p>
+          Born beneath shimmering moons, she guards the realm of dreams and
+          stardust. Her crown shines like moonlight on water.
+        </p>
+        <div class="btn-group">
+          <a class="glass-btn" href="#">Know More</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🌸 Princess 2 -->
+    <div class="section princess">
+      <div class="image-container">
+        <video autoplay muted loop playsinline>
+          <source
+            src="https://res.cloudinary.com/drkxmsg4n/video/upload/v1752059669/198113-906522636_k6x0ld.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="overlay"></div>
+      </div>
+      <div class="content">
+        <h2>Princess Aria of Floravelle</h2>
+        <p>
+          With every step, flowers bloom. Aria speaks to nature and brings
+          harmony to all living things.
+        </p>
+        <div class="btn-group">
+          <a class="glass-btn" href="#">Know More</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔆 Princess 3 -->
+    <div class="section princess">
+      <div class="image-container">
+        <video autoplay muted loop playsinline>
+          <source
+            src="https://res.cloudinary.com/drkxmsg4n/video/upload/v1752059760/190787-888525815_eaatwj.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="overlay"></div>
+      </div>
+      <div class="content">
+        <h2>Princess Elowen of Solara</h2>
+        <p>
+          From the heart of the sun, Elowen brings warmth and courage. Her light
+          brightens even the darkest corners.
+        </p>
+        <div class="btn-group">
+          <a class="glass-btn" href="#">Know More</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="feedback-section">
+      <h3>Leave Your Sparkle ✨</h3>
+      <textarea placeholder="Tell us your dream thoughts..."></textarea><br />
+      <button>Submit</button>
+    </div>
+
+    <footer>
+      © 2025 Disney Princess Realm. All magical rights reserved. | Dream Terms
+    </footer>
+
+    <script>
+      const sections = document.querySelectorAll(".section");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+      sections.forEach((section) => observer.observe(section));
+    </script>
+  </body>
+</html>
